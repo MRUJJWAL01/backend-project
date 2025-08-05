@@ -4,6 +4,6 @@ require("dotenv").config();
 
 connectDB();
 
-app.listen(process.env.PORT || 3000, (req, res) => {
-  console.log("server started at port 3000");
+app.listen( 4000, (req, res) => {
+  console.log("server started at port 4000");
 });
