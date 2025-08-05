@@ -22,27 +22,20 @@ router.post("/songs", upload.single("audio"), async (req, res) => {
 
     const result = await uploadFile(base64File, "hello");
     // console.log(result);
-    console.log(response.image.imageBuffer);
-    
 
-    try {
-        const coverImageResult = await uploadFile(
-          Buffer.from(response.image.imageBuffer).toString("base64"),
-          "coverImage"
-        );
-    } catch (error) {
-        console.log(error);
-        
-    }
+    // const coverImageResult = await uploadFile(
+    //   Buffer.from(response.image.imageBuffer).toString("base64"),
+    //   "coverImage"
+    // );
 
-    // const song = await songModel.create({
-    //   title: response.title,
-    //   artist: response.artist,
-    //   album: response.album,
-    //   releaseDate: response.year,
-    //   audioUrl: result.url,
-    //   coverImage: coverImageResult.url,
-    // });
+    const song = await songModel.create({
+      title: response.title,
+      artist: response.artist,
+      album: response.album,
+      releaseDate: response.year,
+      audioUrl: result.url,
+      //coverImage: coverImageResult.url,
+    });
 
     res.status(201).json({
       message: "success",
