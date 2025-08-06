@@ -1,9 +1,12 @@
 var Imagekit = require("imagekit");
+require("dotenv").config();
+
+
 
 var imagekit = new Imagekit({
-    publicKey:"public_eC5/IKVbuqvUw5xKjfCvLigCeUw=",
-    privateKey:"private_/VH+bFujj//GRL9cMBMeKaYA0ag=",
-    urlEndpoint:"process.env.IMAGEKIT_URL_ENDPOINT"
+    publicKey:process.env.IMAGEKIT_PUBLIC_KEY,
+    privateKey:process.env.IMAGEKIT_PRIVATE_KEY,
+    urlEndpoint:process.env.IMAGEKIT_URL_ENDPOINT
 });
 
 async function uploadFile(file,fileName) {
