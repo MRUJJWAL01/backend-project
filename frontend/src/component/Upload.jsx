@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Navigation from "../literals/Navigation";
-import MusicPlayer from "../literals/MusicPlayer";
 
 const Upload = () => {
   const [audioFile, setAudioFile] = useState(null);
@@ -12,11 +11,27 @@ const Upload = () => {
       console.log("selected File", file);
     }
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (!audioFile) {
       alert("Please select an audio file");
       return;
+    }
+    console.log("clicked");
+    
+     const formData = new FormData();
+    formData.append("audio", audioFile); // 'audio' must match backend field name
+
+    try {
+      const res = await fetch("http://localhost:4000/songs", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await res.json();
+      console.log("Upload Success:", result);
+    } catch (error) {
+      console.error("Upload Error:", error);
     }
   };
   return (
@@ -26,7 +41,7 @@ const Upload = () => {
           Upload
         </h1>
 
-        <form className="w-full max-w-md px-5" action="">
+        <form onSubmit={handleSubmit} className="w-full max-w-md px-5" action="">
           <input
             accept="audio/*"
             type="file"
@@ -40,11 +55,7 @@ const Upload = () => {
             Submit
           </button>
         </form>
-        <div>
-               <MusicPlayer />
-
-        </div>
-
+      
         <footer>
           <Navigation />
         </footer>

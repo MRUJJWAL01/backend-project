@@ -35,54 +35,9 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-5">
-            {/* Cover Image */}
-            <img
-              src={cover}
-              alt="Cover"
-              className="h-20 w-20 object-cover rounded"
-            />
-            {/* Song Info and Play Button */}
-            <div className="flex justify-between items-center w-full">
-              <div>
-                <h2 className="text-md font-medium">Ho Hey</h2>
-                <p className="text-sm text-[#9EB8A8]">Honey Singh</p>
-              </div>
-              <IoPlayOutline className="text-3xl cursor-pointer" />
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            {/* Cover Image */}
-            <img
-              src={cover}
-              alt="Cover"
-              className="h-20 w-20 object-cover rounded"
-            />
-            {/* Song Info and Play Button */}
-            <div className="flex justify-between items-center w-full">
-              <div>
-                <h2 className="text-md font-medium">Ho Hey</h2>
-                <p className="text-sm text-[#9EB8A8]">Honey Singh</p>
-              </div>
-              <IoPlayOutline className="text-3xl cursor-pointer" />
-            </div>
-          </div>
-          <div className="flex items-center gap-5">
-            {/* Cover Image */}
-            <img
-              src={cover}
-              alt="Cover"
-              className="h-20 w-20 object-cover rounded"
-            />
-            {/* Song Info and Play Button */}
-            <div className="flex justify-between items-center w-full">
-              <div>
-                <h2 className="text-md font-medium">Ho Hey</h2>
-                <p className="text-sm text-[#9EB8A8]">Honey Singh</p>
-              </div>
-              <IoPlayOutline className="text-3xl cursor-pointer" />
-            </div>
-          </div>
+          
+          
+          
         </div>
       </div>
       <section >
