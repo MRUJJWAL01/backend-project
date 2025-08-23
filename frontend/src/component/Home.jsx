@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { IoPlayOutline } from "react-icons/io5";
-
+import axios from "axios";
 import Navigation from "../literals/Navigation";
 
 import cover from "../../public/cover.jpg";
 import MusicPlayer from "../literals/MusicPlayer";
-
+import { useEffect } from "react";
+import { Play, Pause } from "lucide-react";
 const Home = () => {
+  const [songs, setSongs] = useState([]);
+  const getData = async () => {
+    const response = await axios.get("http://localhost:3000/songs");
+    setSongs(response.data.song);
+  };
+  const audioRef = useRef(null);
+  const [currentsongplay, setcurrentsongplay] = useState(null);
+  const togglePlay = (song) => {};
+  const [singleSong, setsingleSong] = useState(null)
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <>
       <div className="relative h-screen w-full bg-[#121714] text-white">
@@ -17,37 +32,67 @@ const Home = () => {
 
         {/* Song Card Container */}
         <div className="flex flex-col gap-5 bg-[#121714] px-5 pt-20 overflow-y-auto">
-          <div className="flex items-center gap-5">
-            {/* Cover Image */}
-            <img
-              src={cover}
-              alt="Cover"
-              className="h-20 w-20 object-cover rounded"
-            />
+          {songs &&
+            songs.map((song, index) => (
+            
+              <div key={index} className="flex items-center gap-5">
+                {/* Cover Image */}
+                <img
+                  src={song.imageUrl}
+                  alt="Cover"
+                  className="h-20 w-20 object-cover rounded"
+                />
 
-            {/* Song Info and Play Button */}
-            <div className="flex justify-between items-center w-full">
-              <div>
-                <h2 className="text-md font-medium">Ho Hey</h2>
-                <p className="text-sm text-[#9EB8A8]">Honey Singh</p>
+                {/* Song Info and Play Button */}
+                <div className="flex justify-between items-center w-full">
+                  <div>
+                    <h2 className="text-md font-medium">{song.title}</h2>
+                    <h2 className="text-sm text-[#9EB8A8]">
+                      {song.releaseDate}
+                    </h2>
+                    <p className="text-sm text-[#9EB8A8]">{song.artist}</p>
+                  </div>
+
+              { currentsongplay === song._id &&   <audio
+                    style={{ display: "none" }}
+                    src={song.audioUrl}
+                    controls
+                    autoPlay
+                    playsInline
+                  />}
+                  <button
+                    className=""
+                    onClick={() => {
+                      if(currentsongplay=== song._id){
+                        setcurrentsongplay(null);
+                        return;
+                      }
+                      setcurrentsongplay(song._id);
+                      
+                    
+                      
+                      
+                    }}
+                  >
+                    {currentsongplay === song._id ? (
+                      <Pause className="text-3xl cursor-pointer" />
+                    ) : (
+                      <Play className="text-3xl cursor-pointer" />
+                    )}
+                  </button>
+                </div>
               </div>
-              <IoPlayOutline className="text-3xl cursor-pointer" />
-            </div>
-          </div>
-
-          
-          
-          
+              
+            ))}
         </div>
       </div>
-      <section >
+      <section>
         <MusicPlayer />
       </section>
-        <footer className="text-white ">
-          {/* Navigation bar  */}
-          <Navigation />
-        </footer>
-      
+      <footer className="text-white ">
+        {/* Navigation bar  */}
+        <Navigation />
+      </footer>
     </>
   );
 };

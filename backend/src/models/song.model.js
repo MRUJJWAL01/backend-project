@@ -6,7 +6,7 @@ const songSchema = new mongoose.Schema({
     album:String,
     releaseDate:String,
     audioUrl:String,
-    converImage:String
+    imageUrl:String
 })
 
 const songModel = mongoose.model('song',songSchema);

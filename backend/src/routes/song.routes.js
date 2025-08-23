@@ -8,36 +8,45 @@ const uploadFile = require("../services/storage.service");
 const upload = multer({ storage: multer.memoryStorage() });
 router.post("/songs", upload.single("audio"), async (req, res) => {
   try {
-    const buffer = req.file.buffer;
-    const base64File = Buffer.from(buffer).toString("base64");
-    const response = id3.read(buffer);
-    const result = await uploadFile(base64File, "hello");
-    console.log(result);
-    let coverImageResult = null;
-    if (response?.image?.imageBuffer) {
-     coverImageResult = await uploadFile(
-        Buffer.from(response.image.imageBuffer).toString("base64"),
-        "coverImage"
-      );
-    }
-    console.log(coverImageResult);
-    
+    const file = req.file.buffer;
+    // const base64File = Buffer.from(buffer).toString("base64");
+    const response = id3.read(file);
+
+    const audio = await uploadFile(file, "hello");
+
+    const coverImage = await uploadFile(
+      response.image.imageBuffer,
+      "coverImage"
+    );
+
+    console.log(coverImage.url, "hello guys i am ujjwal");
+
     const song = await songModel.create({
       title: response.title,
       artist: response.artist,
       album: response.album,
       releaseDate: response.year,
-      audioUrl: result.url,
-      coverImage: coverImageResult?.url || null,
+      audioUrl: audio.url,
+      imageUrl:coverImage.url
+
     });
+
     res.status(201).json({
       message: "success",
-      song
+      song: song,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json("error");
   }
+});
+
+router.get("/songs", async (req, res) => {
+  const song = await songModel.find();
+  res.status(201).json({
+    massege: "File fetched successfully",
+    song: song,
+  });
 });
 
 module.exports = router;

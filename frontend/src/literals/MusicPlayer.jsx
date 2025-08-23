@@ -3,6 +3,7 @@ import { IoPlay } from "react-icons/io5";
 import cover from "../../public/cover.jpg";
 
 const MusicPlayer = () => {
+  
   return (
       <div className="flex  items-center gap-5 bg-[#29382F] fixed bottom-28 w-full rounded-2xl p-4 mt-20  ">
         {/* Cover Image */}
