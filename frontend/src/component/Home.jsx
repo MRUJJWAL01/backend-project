@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { IoPlayOutline } from "react-icons/io5";
 import axios from "axios";
 import Navigation from "../literals/Navigation";
 
@@ -9,6 +8,8 @@ import { useEffect } from "react";
 import { Play, Pause } from "lucide-react";
 const Home = () => {
   const [songs, setSongs] = useState([]);
+  const [playedsong, setplayedsong] = useState(null);
+
   const getData = async () => {
     const response = await axios.get("http://localhost:3000/songs");
     setSongs(response.data.song);
@@ -68,6 +69,7 @@ const Home = () => {
                         return;
                       }
                       setcurrentsongplay(song._id);
+                      setplayedsong(song);
                       
                     
                       
@@ -87,7 +89,7 @@ const Home = () => {
         </div>
       </div>
       <section>
-        <MusicPlayer />
+        <MusicPlayer song={playedsong} currentsongplay={currentsongplay} />
       </section>
       <footer className="text-white ">
         {/* Navigation bar  */}
